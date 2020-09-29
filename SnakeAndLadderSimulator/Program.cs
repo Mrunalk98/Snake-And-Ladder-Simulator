@@ -4,33 +4,47 @@ namespace SnakeAndLadderSimulator
 {
     class Program
     {
-        static int position = 0;
+        public static bool gameEnd = false;
+        static int[] position = { 0, 0 };
         public const int IS_LADDER = 1;
         public const int IS_SNAKE = 2;
+        static bool getsLadder = false;
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Snake and Ladder Simulator");            
-            Console.WriteLine("Player start position : " + position);
+            Console.WriteLine("Welcome to Snake and Ladder Simulator\n");
             GetNumberOnDie();
-
         }
+
 
         static int GetNumberOnDie()
         {
-            int count = 0;
-            while (position < 100)
+            int result = 0;
+            while (!gameEnd)
             {
-                Random random = new Random();
-                int number = random.Next(1, 7);
-                count++;
-                Console.WriteLine("Number on die : " + number);
-                CheckForOptions(number);
+                for (int i=0; i < position.Length; i++)
+                {
+                    Console.WriteLine("For Player " + (i+1));
+                    Random random = new Random();
+                    int number = random.Next(1, 7);
+                    result = CheckForOptions(number, position[i]);
+                    position[i] = result;
+                    if (getsLadder)
+                    {
+                        i--;
+                        getsLadder = false;
+                    }
+                    if (result == 100)
+                    {
+                        Console.WriteLine("Player " + (i+2) + " wins the game!");
+                        gameEnd = true;
+                        return result;
+                    }
+
+                }                
             }
-            Console.WriteLine("You have reached winning position !");
-            Console.WriteLine("Number of times dice is played to win : " + count);
-            return position;
+            return result;
         }
-        static int CheckForOptions(int numberOnDie)
+        static int CheckForOptions(int numberOnDie, int position)
         {
             string option;
             Random rand = new Random();
@@ -45,6 +59,7 @@ namespace SnakeAndLadderSimulator
                     {
                         position -= numberOnDie;
                     }
+                    getsLadder = true;
                     break;
 
                 case IS_SNAKE:
@@ -60,9 +75,7 @@ namespace SnakeAndLadderSimulator
                     option = "No Play";
                     break;
             }
-
-            Console.WriteLine("You got " + option);
-            Console.WriteLine("Current Position : " + position + "\n");
+            Console.WriteLine("Number on die : " + numberOnDie + "\t" + "Gets : " + option + "\t\t" + "Current Position : " + position + "\n");
             return position;
         }
     }
