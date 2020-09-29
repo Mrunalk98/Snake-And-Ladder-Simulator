@@ -39,6 +39,10 @@ namespace SnakeAndLadderSimulator
                 case IS_LADDER:
                     option = "Ladder";
                     position += numberOnDie;
+                    if (position > 100)
+                    {
+                        position -= numberOnDie;
+                    }
                     break;
 
                 case IS_SNAKE:
@@ -56,7 +60,7 @@ namespace SnakeAndLadderSimulator
             }
 
             Console.WriteLine("You got " + option);
-            Console.WriteLine("New Position : " + position);
+            Console.WriteLine("Current Position : " + position + "\n");
             return position;
         }
     }
