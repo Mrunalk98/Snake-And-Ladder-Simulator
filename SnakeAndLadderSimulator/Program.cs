@@ -17,15 +17,17 @@ namespace SnakeAndLadderSimulator
 
         static int GetNumberOnDie()
         {
+            int count = 0;
             while (position < 100)
             {
                 Random random = new Random();
                 int number = random.Next(1, 7);
-
+                count++;
                 Console.WriteLine("Number on die : " + number);
                 CheckForOptions(number);
             }
             Console.WriteLine("You have reached winning position !");
+            Console.WriteLine("Number of times dice is played to win : " + count);
             return position;
         }
         static int CheckForOptions(int numberOnDie)
