@@ -9,22 +9,26 @@ namespace SnakeAndLadderSimulator
         public const int IS_SNAKE = 2;
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Snake and Ladder Simulator");
-            
-            Console.WriteLine("Player position : " + position);
+            Console.WriteLine("Welcome to Snake and Ladder Simulator");            
+            Console.WriteLine("Player start position : " + position);
             GetNumberOnDie();
 
         }
 
-        static string GetNumberOnDie()
+        static int GetNumberOnDie()
         {
-            Random random = new Random();
-            int number = random.Next(1, 7);
+            while (position < 100)
+            {
+                Random random = new Random();
+                int number = random.Next(1, 7);
 
-            Console.WriteLine("Number on die : " + number);
-            return CheckForOptions(number);
+                Console.WriteLine("Number on die : " + number);
+                CheckForOptions(number);
+            }
+            Console.WriteLine("You have reached winning position !");
+            return position;
         }
-        static string CheckForOptions(int numberOnDie)
+        static int CheckForOptions(int numberOnDie)
         {
             string option;
             Random rand = new Random();
@@ -53,7 +57,7 @@ namespace SnakeAndLadderSimulator
 
             Console.WriteLine("You got " + option);
             Console.WriteLine("New Position : " + position);
-            return option;
+            return position;
         }
     }
 }
